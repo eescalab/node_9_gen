@@ -1,6 +1,6 @@
 ## CALIFICACION
 minimo 5  =73%
-
+  
 ## Herramientas
 
 VSCODE
