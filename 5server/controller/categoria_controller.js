@@ -5,9 +5,10 @@ const ModelCategoria = require('../models/categoria_model');
 //==========
 function guardar(req, res){
     //Cuerpo metodo Post 
-    
+
     console.log(req.body);
 
+    
     let data = {
         categoria_nombre : req.body.categoria_nombre
     }
@@ -16,7 +17,7 @@ function guardar(req, res){
 
     documento.save( (err, doc) => {
 
-        console.log(object);
+
         return res.json({
             data : doc
         })
@@ -27,6 +28,42 @@ function guardar(req, res){
 
 }
 
+//==========
+//	Listar Categoria
+//==========
+
+function listar(req, res) {
+
+    ModelCategoria.find( (err, docs) => {
+        res.json( docs );
+    } );
+}
+
+//==========
+//	Update Categoria
+//==========
+//localhost:3000/producto/:id
+
+function actualizar(req , res ) {
+
+    const id = req.params.id;
+
+    let data = {
+        categoria_nombre: req.body.categoria_nombre,
+        status : req.body.status
+
+    }
+
+    ModelCategoria.findByIdAndUpdate(id, data , {new: true}, (err, doc ) => {
+        res.json(doc);
+    })
+    
+
+}
+
+
 module.exports = {
-    guardar
+    guardar,
+    listar,
+    actualizar
 }

@@ -24,5 +24,6 @@ const model = mongoose.model('modelCategoria', schemaCategoria);
 module.exports = model;
 
 //1 Schema
+
 //2 Modelo
 //3 Documento
