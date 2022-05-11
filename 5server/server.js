@@ -1,27 +1,22 @@
-const express = require('express');
-const morgan = require("morgan");
+//Module core
+const http = require('http');
+
+//Module npm
 const mongoose = require('mongoose');
-
-const app = express();
-
-//=====
-// Middlewares
-//======
-
-    //body-parser
-    app.use(express.json())
-
-    //logg consola 
-    app.use(morgan("dev")); 
+//Modulos propios
+const app = require('./config/app')
 
 
+
+const server = http.createServer(app);
+
+ 
     
 //"mongoose": "^5.12.2"
-mongoose.connect('mongodb://localhost:27017/test').then(  ()=>{
+mongoose.connect('mongodb://localhost:27017/node9Gen').then(  ()=>{
     console.log('Mongo Ok');
-    
-})
 
-app.listen(8080, ()=>{
-    console.log('Server Ok 8080');
+    server.listen('3000', () => {
+        console.log('Server Up port 3000');
+    })
 })
