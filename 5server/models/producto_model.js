@@ -39,8 +39,7 @@ const schemaProducto = new Schema({
   },
   categoria_nombre: {
     type: String,
-    required: true,
-    validate : validator_categoria
+    required: true
   },
   imagen: {
     type: Buffer,
@@ -49,6 +48,13 @@ const schemaProducto = new Schema({
 }, {
   timestamps: true
 });
+
+schemaProducto.path('categoria_nombre').validate(
+  {
+    validator: validator_categoria,
+    message: 'Categoria no Existe ! v3'
+  }
+)
 
 
 const model = mongoose.model('modelProducto', schemaProducto );
