@@ -90,7 +90,7 @@ function borrar(req, res, next){
 //	Update Producto
 //==========
 
-async function update(req, res, next){
+function update(req, res, next){
 
     let docProducto = req.docProducto;
 
