@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const ModelUsuario = require("../models/usuario_model");
 const { util_handler } = require("../middlewares/middleware_error");
+var jwt = require("jsonwebtoken");
 
 function singup(req, res, next) {
   console.log(req.body);
@@ -38,12 +39,22 @@ function login(req, res, next) {
       return next(error);
     }
 
+    let payload = {
+      usuarioId: doc._id,
+      role: doc.role,
+    };
+
+    var token = jwt.sign(payload, process.env.TOKEN_KEY, {
+      expiresIn: "1h",
+    });
+
     return res.json({
       usuario: {
         usuarioId: doc._id,
         nombre: doc.nombre,
         role: doc.role,
       },
+      token,
     });
   });
 }
