@@ -45,7 +45,7 @@ function login(req, res, next) {
     };
 
     var token = jwt.sign(payload, process.env.TOKEN_KEY, {
-      expiresIn: "1h",
+      expiresIn: process.env.CADUCIDAD_TOKEN,
     });
 
     return res.json({

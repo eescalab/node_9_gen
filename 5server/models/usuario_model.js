@@ -29,7 +29,7 @@ var schemaUsuario = new Schema({
       {
         productId: {
           type: Schema.Types.ObjectId,
-          ref: "Product",
+          ref: "modelProducto",
         },
         cantidad: {
           type: Number,

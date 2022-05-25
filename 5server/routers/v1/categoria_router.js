@@ -7,7 +7,7 @@ const {
   actualizar,
 } = require("../../controller/categoria_controller");
 
-router.post("/categoria", roleAuth(["USER_ROLE", "ADMIN_ROLE"]), guardar);
+router.post("/categoria", roleAuth(["ADMIN_ROLE"]), guardar);
 router.get("/categoria", listar);
 router.put("/categoria/:id", actualizar);
 

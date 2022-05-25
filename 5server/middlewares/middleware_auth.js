@@ -1,5 +1,6 @@
 var jwt = require("jsonwebtoken");
 
+//[ADMIN_ROLE, USER_ROLE ...... ]
 roleAuth = (roles) => {
   try {
     return (req, res, next) => {
@@ -14,7 +15,7 @@ roleAuth = (roles) => {
       // }
 
       if (roles.indexOf(payload.role) > -1) {
-        req.usuario = payload;
+        // req.usuario = payload;
         return next();
       }
 
@@ -28,6 +29,39 @@ roleAuth = (roles) => {
   }
 };
 
+isAuth = (req, res, next) => {
+  let token = req.get("Authorization");
+
+  jwt.verify(token, process.env.TOKEN_KEY, (err, decoded) => {
+    if (err) return next(err);
+
+    console.log("decoded", decoded);
+    req.decoded = decoded;
+
+    next();
+  });
+};
+
+renewToken = (req, res, next) => {
+  // let { iat, exp, ...payload } = req.decoded;
+
+  let payload = {
+    usuarioId: req.decoded.usuarioId,
+    role: req.decoded.role
+  }
+
+  console.log('new payload', payload);
+
+  let token = jwt.sign(payload, process.env.TOKEN_KEY, {
+    expiresIn: process.env.CADUCIDAD_TOKEN,
+  });
+
+  res.json({token})
+
+};
+
 module.exports = {
   roleAuth,
+  isAuth,
+  renewToken
 };
