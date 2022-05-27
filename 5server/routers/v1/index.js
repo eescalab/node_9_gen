@@ -6,5 +6,6 @@ const carroRouter = require("./carro_router");
 module.exports = (app) => {
   app.use("/api/v1", categoriaRouter);
   app.use("/api/v1", productoRouter);
+  app.use("/api/v1", loginRouter);
   app.use("/api/v1", carroRouter);
 };

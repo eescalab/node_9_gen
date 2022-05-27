@@ -42,7 +42,7 @@ const schemaProducto = new Schema({
     required: true
   },
   imagen: {
-    type: Buffer,
+    data: Buffer,
     contentType: String
    }
 }, {

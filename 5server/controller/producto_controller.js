@@ -28,7 +28,22 @@ function guardar(req, res, next) {
     categoria_nombre: req.body.categoria_nombre,
   };
 
+  console.log(req.files);
+
+
+
   let Documento = new ModelProducto(data);
+  
+  console.log(Documento);
+
+  if(req.files){
+    Documento.imagen.data = req.files.imagen.data;
+    Documento.imagen.contentType = req.files.imagen.mimetype;
+
+    // Documento.imagen.data = req.files.imagen.data;
+    // Documento.imagen.contentType = req.files.imagen.mimetype;
+  }
+
   Documento.save((err, doc) => {
     if (err) return util_handler(doc, next, err);
 
@@ -103,10 +118,25 @@ function update(req, res, next) {
   //       });
 }
 
+function imagen(req, res) {
+
+  let idProucto = req.params.id;
+
+  ModelProducto.findById(idProucto, (err, doc) => {
+
+
+    res.set('Content-Type', doc.imagen.contentType);
+    return res.send(doc.imagen.data);
+
+  })
+  
+}
+
 module.exports = {
   getProducto,
   guardar,
   getxId,
   borrar,
   update,
+  imagen
 };

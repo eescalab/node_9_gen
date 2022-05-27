@@ -1,4 +1,5 @@
 var jwt = require("jsonwebtoken");
+const ModelUsuario = require("../models/usuario_model");
 
 //[ADMIN_ROLE, USER_ROLE ...... ]
 roleAuth = (roles) => {
@@ -45,18 +46,14 @@ isAuth = (req, res, next) => {
 renewToken = (req, res, next) => {
   // let { iat, exp, ...payload } = req.decoded;
 
-  let payload = {
-    usuarioId: req.decoded.usuarioId,
-    role: req.decoded.role
-  }
+  let idUsuario = req.decoded.usuarioId;
 
-  console.log('new payload', payload);
+  ModelUsuario.findById(idUsuario, (err, docUsuario )=> {
 
-  let token = jwt.sign(payload, process.env.TOKEN_KEY, {
-    expiresIn: process.env.CADUCIDAD_TOKEN,
-  });
+    let token = docUsuario.getToken();
+    res.json({token})
+  })
 
-  res.json({token})
 
 };
 

@@ -15,16 +15,9 @@ addCarro = async (req, res, next) => {
 
 		docUsuario = await ModelUsuario.findById(usuarioId).exec()
 
-		let cantidad = 1;
-		let items = [
-			{
-				productId : docProducto._id,
-				cantidad,
-				total: cantidad * docProducto.precio
-			}
-		]
-		docUsuario.cart.items = items;
-		await docUsuario.save();
+		await docUsuario.addCarro(docProducto);
+		
+		
 		return res.json({docUsuario})
 
   } catch(err) {
