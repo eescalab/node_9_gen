@@ -1,0 +1,38 @@
+{
+    "definition": {
+      "openapi": "3.0.0",
+      "info": {
+        "title": "Node 9 Gen",
+        "version": "1.0.0",
+        "description": "An example for node course in Escalab Academy",
+        "termsOfService": "http://example.com/terms/",
+        "contact": {
+          "name": "Api Support",
+          "url": "https://escalab.academy/",
+          "email": "eortega@escalab.academy"
+        },
+        "license": {
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT"
+        }
+      },
+      "servers": [
+        {
+          "url": "http://localhost:3000/api/v1",
+          "description": "My API Documentation Developer Server"
+        }
+      ],
+      "security": [{ "ApiKey": [] }],
+      "components": {
+        "securitySchemes": {
+          "ApiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+          }
+        }
+      }
+    },
+    "apis": ["./routers/v1/*.js"]
+  }
+  

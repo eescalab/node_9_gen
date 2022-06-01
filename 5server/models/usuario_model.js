@@ -121,6 +121,13 @@ schemaUsuario.virtual('cart.unidades').get( function() {
   return unidades;
 })
 
+schemaUsuario.methods.clearCarrito = function(){
+
+  this.cart = { items: [] };
+  return this.save();
+
+}
+
 schemaUsuario.set('toJSON', {virtuals : true});
 
 const model = mongoose.model("modelUsuario", schemaUsuario);

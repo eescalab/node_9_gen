@@ -1,9 +1,9 @@
 const ModelCategoria = require('../models/categoria_model');
-
+const { util_handler } = require("../middlewares/middleware_error");
 //==========
 //	Guardar Categoria
 //==========
-function guardar(req, res){
+function guardar(req, res, next){
     //Cuerpo metodo Post 
 
     console.log(req.body);
@@ -16,7 +16,8 @@ function guardar(req, res){
     let documento = ModelCategoria(data);
 
     documento.save( (err, doc) => {
-
+        
+        if(err)  return util_handler(doc, next, err)
 
         return res.json({
             data : doc
@@ -35,7 +36,7 @@ function guardar(req, res){
 function listar(req, res) {
 
     ModelCategoria.find( (err, docs) => {
-        res.json( docs );
+        return res.json( docs );
     } );
 }
 
@@ -55,7 +56,10 @@ function actualizar(req , res ) {
     }
 
     ModelCategoria.findByIdAndUpdate(id, data , {new: true}, (err, doc ) => {
-        res.json(doc);
+        
+        if(err) return util_handler(doc, next, err)
+
+        return res.json(doc);
     })
     
 
