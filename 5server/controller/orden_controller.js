@@ -17,7 +17,7 @@ const generarOrden = async (req, res, next) => {
         })
         
     } catch (error) {
-        next(error);
+        return next(error);
     }
 }
 

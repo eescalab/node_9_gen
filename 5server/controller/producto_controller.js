@@ -1,5 +1,6 @@
 const ModelProducto = require("../models/producto_model");
 const { util_handler } = require("../middlewares/middleware_error");
+const res = require("express/lib/response");
 
 //==========
 // [Param] 	getProducto
@@ -132,11 +133,65 @@ function imagen(req, res) {
   
 }
 
+async function listar_paginate1(req, res, next){
+  try {
+    
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page -1) * limit;
+
+    const data = await ModelProducto.find()
+      .sort({createdAt: -1})
+      .skip(skip)
+      .limit(limit);
+
+    const dataCount = await ModelProducto.countDocuments();
+
+    const totalPages = Math.ceil(dataCount / limit);
+
+    return res.status(200).send({
+      data: data,
+      paging: {
+        total: dataCount,
+        page: page || 1,
+        totalpages : totalPages || 1
+      }
+    })
+
+
+  } catch (error) {
+    return next(error);
+  }
+}
+
+
+async function listar_paginate2(req, res, next){
+  try {
+    
+    let options = {page, limit} = req.query;
+    console.log(options);
+
+    const data = await ModelProducto.paginate({} , options);
+
+    return res.status(200).send({
+      data
+    })
+
+
+  } catch (error) {
+    return next(error);
+  }
+}
+
+
 module.exports = {
   getProducto,
   guardar,
   getxId,
   borrar,
   update,
-  imagen
+  imagen,
+  listar_paginate1,
+  listar_paginate2,
+  
 };

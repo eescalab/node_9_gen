@@ -3,7 +3,15 @@ const http = require("http");
 
 //Module npm
 const mongoose = require("mongoose");
-require("dotenv").config();
+
+//Variables de entorno
+console.log(process.env.NODE_ENV);
+if(process.env.NODE_ENV==='dev'){
+  require("dotenv").config({path: `${__dirname}/.env.dev`});
+
+}else{
+  require("dotenv").config();
+}
 
 //Express
 const app = require("./config/app");
@@ -13,6 +21,7 @@ const server = http.createServer(app);
 // console.log(process.env.CADUCIDAD_TOKEN);
 
 //"mongoose": "^5.12.2"
+console.log(process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log("Mongo Ok");
 

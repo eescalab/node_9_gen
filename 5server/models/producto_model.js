@@ -1,5 +1,5 @@
 const ModelCategoria = require('./categoria_model');
-
+const mongoosePaginate = require('mongoose-paginate-v2');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -55,6 +55,14 @@ schemaProducto.path('categoria_nombre').validate(
     message: 'Categoria no Existe ! v3'
   }
 )
+
+schemaProducto.methods.toJSON = function(){
+  let obj = this.toObject();
+  delete obj.imagen;
+  return obj;
+}
+
+schemaProducto.plugin(mongoosePaginate);
 
 
 const model = mongoose.model('modelProducto', schemaProducto );
