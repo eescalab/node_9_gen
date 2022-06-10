@@ -8,7 +8,7 @@ router.post("/singup", validatorSingUp, singup);
 
 router.post("/login", validatorLogin, login);
 
-router.get("/token/renew",
+router.get("/login/renew",
     isAuth,
     renewToken
 )

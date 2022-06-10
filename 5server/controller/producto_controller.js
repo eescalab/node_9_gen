@@ -48,7 +48,9 @@ function guardar(req, res, next) {
   Documento.save((err, doc) => {
     if (err) return util_handler(doc, next, err);
 
-    return res.json(doc);
+    return res.json({
+      data: doc
+    });
   });
 }
 
@@ -119,15 +121,26 @@ function update(req, res, next) {
   //       });
 }
 
-function imagen(req, res) {
+function imagen(req, res, next) {
 
+  
   let idProucto = req.params.id;
-
-  ModelProducto.findById(idProucto, (err, doc) => {
-
-
-    res.set('Content-Type', doc.imagen.contentType);
-    return res.send(doc.imagen.data);
+  console.log('idProucto, ',idProucto);
+  if(!idProucto) {
+    let error = new Error("No encontrado !");
+    error.statusCode = 404;
+    return next(error);
+  }
+  console.log('idProucto',idProucto);
+  ModelProducto.findById(idProucto, (err, doc , next) => {
+   
+    // console.log('doc',doc);
+    if(err) return util_handler(doc, next, err);
+    
+      res.set('Content-Type', doc.imagen.contentType);
+      return res.send(doc.imagen.data);
+    
+    
 
   })
   
@@ -184,6 +197,28 @@ async function listar_paginate2(req, res, next){
 }
 
 
+function getxCategoria(req, res, next) {
+  console.log('req.params:', req.params);
+
+  let categoria_nombre = req.params.categoria_nombre;
+  let query = categoria_nombre !='undefined' ? { categoria_nombre } : {}
+  
+  ModelProducto.find( query ).select('-imagen')
+    .exec((err, items) => {
+
+      if (err || !items) return errorHandler(items, next, err)
+      
+      return res.json({
+        items: items
+      })
+
+    })
+
+}
+
+
+
+
 module.exports = {
   getProducto,
   guardar,
@@ -193,5 +228,5 @@ module.exports = {
   imagen,
   listar_paginate1,
   listar_paginate2,
-  
+  getxCategoria
 };

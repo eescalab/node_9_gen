@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="w-40">
+  <form
+      autocomplete="off"
+      [formGroup] = "productoForm"
+      (ngSubmit) = "onSubmit()"
+      id="productoForm"
+      novalidate>
+  
+      
+    <div class="form-row">
+      <div class="col-12 mb-2">
+        <label >Nombre</label>
+        <input type="text"  formControlName="producto_nombre" class="form-control form-control-sm" >
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-12 mb-2">
+        <label>Descripcion</label>
+        <input type="text"  formControlName="descripcion" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-6 mb-2">
+        <label>Precio</label>
+        <input type="number"  formControlName="precio" class="form-control form-control-sm">
+      </div>
+      <div class="col-6 mb-2">
+        <label>Stock</label>
+        <input type="number"  formControlName="stock" class="form-control form-control-sm">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="col-12 mb-2">
+        <label>Categoria</label>
+        <select class="form-control form-control-sm" formControlName="categoria_nombre" >
+          <option  *ngFor="let item of lcategorias" value="{{item.categoria_nombre}}">{{item.categoria_nombre}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-12 mb-2">
+        <label>Imagen</label>
+  
+        <div class="custom-file mb-3">
+  
+          <input type="file"(change)="onFileSelect($event)" formControlName="imagen" 
+           class="custom-file-input" id="imagen" >
+          <label class="custom-file-label" #labelImport for="imagen">Seleccionar...</label>
+          
+  
+        </div>
+  
+        <!-- <input type="file" (change)="onFileSelect($event)" name="imagen"class="custom-file-input custom-file-input-sm" > -->
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+  </div></div>

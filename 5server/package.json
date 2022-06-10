@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=dev nodemon server.js",
+    "prod": "cross-env NODE_ENV=prod nodemon server.js",
     "start": "node server.js"
   },
   "keywords": [],
@@ -23,10 +24,10 @@
     "mongoose": "^6.3.2",
     "mongoose-paginate-v2": "^1.6.3",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.16"
   }
 }

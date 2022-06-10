@@ -16,8 +16,16 @@ function singup(req, res, next) {
   docUsuario.save((err, doc) => {
     if (err) return util_handler(doc, next, err);
 
+     //TODO Borrar
+     var token = docUsuario.getToken();
+
     res.json({
-      doc,
+      usuario: {
+        usuarioId: docUsuario._id,
+        nombre: docUsuario.nombre,
+        role: docUsuario.role,
+      },
+      token: token,
     });
   });
 }
@@ -25,11 +33,12 @@ function singup(req, res, next) {
 function login(req, res, next) {
   let email = req.body.email;
   let password = req.body.password;
-
+  
   ModelUsuario.findOne({ email: email }, (err, docUsuario) => {
-    if (err) return util_handler(doc, next, err);
+    if (err || !docUsuario ) return util_handler(docUsuario, next, err);
 
-
+    console.log('docUsuario',docUsuario);
+    console.log('password',password);
     if (!docUsuario.isValidPassword(password)) {
       let error = new Error("usuario o password incorrecto");
       error.statusCode = 404;

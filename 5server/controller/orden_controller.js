@@ -21,6 +21,29 @@ const generarOrden = async (req, res, next) => {
     }
 }
 
+const listarOrden = async (req, res, next) => {
+
+    let idUsuario = req.params.idUsuario;
+    console.log('idUsuario:', idUsuario);
+    
+  
+    try {
+      let docOrden = await ModelOrden.find({ 'usuario.userId': idUsuario }, '-productos.producto.imagen').exec();
+  
+      console.log('docOrden:', docOrden);
+      
+      res.json(docOrden);
+  
+    } catch (error) {
+      next(error);
+    }
+  
+  
+  
+  }
+
+
 module.exports = {
-    generarOrden
+    generarOrden,
+    listarOrden
 }

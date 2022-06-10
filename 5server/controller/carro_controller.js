@@ -35,7 +35,7 @@ listarCarro = (req, res, next) => {
 		.populate('cart.items.productId').exec( (err, doc) => {
 			if(err) return next(err);
 
-			return res.json({doc})
+			return res.json(doc.cart)
 		} )
 }
 

@@ -9,8 +9,8 @@ console.log(process.env.NODE_ENV);
 if(process.env.NODE_ENV==='dev'){
   require("dotenv").config({path: `${__dirname}/.env.dev`});
 
-}else{
-  require("dotenv").config();
+}else if(process.env.NODE_ENV==='prod'){
+  require("dotenv").config({path: `${__dirname}/.env.prod`});
 }
 
 //Express
@@ -25,7 +25,7 @@ console.log(process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log("Mongo Ok");
 
-  server.listen("3000", () => {
+  server.listen(process.env.PORT, () => {
     console.log("Server Up port 3000");
   });
 });

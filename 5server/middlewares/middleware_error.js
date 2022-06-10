@@ -1,4 +1,4 @@
-function util_handler(doc, next, err = null) {
+function util_handler(doc = null, next, err = null) {
   if (err) {
     return next(err);
   }
